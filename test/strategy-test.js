@@ -1,7 +1,7 @@
 var vows = require('vows');
 var assert = require('assert');
 var util = require('util');
-var EvernoteStrategy = require('passport-evernote/strategy');
+var EvernoteStrategy = require('../lib/strategy');
 
 
 vows.describe('EvernoteStrategy').addBatch({
