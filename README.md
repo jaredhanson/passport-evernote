@@ -21,21 +21,31 @@ unobtrusively integrated into any application or framework that supports
 
 ## Usage
 
+#### Create an Application
+
+Before using `passport-evernote`, you must first get an Evernote API key. If you
+have not already done so, an API key can be requested at [Evernote Developers](https://dev.evernote.com/).
+Your will be issued an API key and secret, which need to be provided to the
+strategy.
+
 #### Configure Strategy
 
-The Evernote authentication strategy authenticates users using a Evernote
-account and OAuth tokens.  The strategy requires a `verify` callback, which
-accepts these credentials and calls `done` providing a user, as well as
-`options` specifying a consumer key, consumer secret, and callback URL.
+The Evernote authentication strategy authenticates users using an Evernote
+account and OAuth tokens.  The API key secret obtained from Evernote are
+supplied as options when creating the strategy.  The strategy also requires a
+`verify` callback, which receives the access token and corresponding secret as
+arguments, as well as `profile` which contains the authenticated user's Evernote
+profile.   The `verify` callback must call `cb` providing a user to complete
+authentication.
 
     passport.use(new EvernoteStrategy({
         consumerKey: EVERNOTE_CONSUMER_KEY,
         consumerSecret: EVERNOTE_CONSUMER_SECRET,
         callbackURL: "http://127.0.0.1:3000/auth/evernote/callback"
       },
-      function(token, tokenSecret, profile, done) {
+      function(token, tokenSecret, profile, cb) {
         User.findOrCreate({ evernoteId: profile.id }, function (err, user) {
-          return done(err, user);
+          return cb(err, user);
         });
       }
     ));
@@ -60,21 +70,67 @@ application:
 
 ## Examples
 
-For a complete, working example, refer to the [login example](https://github.com/jaredhanson/passport-evernote/tree/master/examples/login).
+Developers using the popular [Express](http://expressjs.com/) web framework can
+refer to an [example](https://github.com/passport/express-4.x-evernote-example)
+as a starting point for their own web applications.  The example shows how to
+authenticate users using Twitter.  However, because both Twitter and Evernote
+use OAuth 1.0, the code is similar.  Simply replace references to Twitter with
+corresponding references to Evernote.
 
-## Tests
+## FAQ
 
-    $ npm install --dev
-    $ make test
+##### How do I test against the Evernote sandbox?
 
-[![Build Status](https://secure.travis-ci.org/jaredhanson/passport-evernote.png)](http://travis-ci.org/jaredhanson/passport-evernote)
+Supply the sandbox endpoint URLs as options to the strategy, as follows:
 
-## Credits
+```js
+new EvernoteStrategy({
+  requestTokenURL: 'https://sandbox.evernote.com/oauth',
+  accessTokenURL: 'https://sandbox.evernote.com/oauth',
+  userAuthorizationURL: 'https://sandbox.evernote.com/OAuth.action',
+  consumerKey: EVERNOTE_CONSUMER_KEY,
+  consumerSecret: EVERNOTE_CONSUMER_SECRET,
+  callbackURL: "http://127.0.0.1:3000/auth/evernote/callback"
+}
+```
 
-  - [Jared Hanson](http://github.com/jaredhanson)
+## Contributing
+
+#### Tests
+
+The test suite is located in the `test/` directory.  All new features are
+expected to have corresponding test cases.  Ensure that the complete test suite
+passes by executing:
+
+```bash
+$ make test
+```
+
+#### Coverage
+
+The test suite covers 100% of the code base.  All new feature development is
+expected to maintain that level.  Coverage reports can be viewed by executing:
+
+```bash
+$ make test-cov
+$ make view-cov
+```
+
+## Support
+
+#### Funding
+
+This software is provided to you as open source, free of charge.  The time and
+effort to develop and maintain this project is dedicated by [@jaredhanson](https://github.com/jaredhanson).
+If you (or your employer) benefit from this project, please consider a financial
+contribution.  Your contribution helps continue the efforts that produce this
+and other open source software.
+
+Funds are accepted via [PayPal](https://paypal.me/jaredhanson), [Venmo](https://venmo.com/jaredhanson),
+and [other](http://jaredhanson.net/pay) methods.  Any amount is appreciated.
 
 ## License
 
 [The MIT License](http://opensource.org/licenses/MIT)
 
-Copyright (c) 2011-2013 Jared Hanson <[http://jaredhanson.net/](http://jaredhanson.net/)>
+Copyright (c) 2011-2016 Jared Hanson <[http://jaredhanson.net/](http://jaredhanson.net/)>
