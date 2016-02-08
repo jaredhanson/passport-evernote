@@ -4,7 +4,7 @@ var EvernoteStrategy = require('../lib/strategy')
 
 describe('Strategy#userProfile', function() {
   
-  describe.only('parsed from parameters in access token response', function() {
+  describe('parsed from parameters in access token response', function() {
     var strategy = new EvernoteStrategy({
       consumerKey: 'ABC123',
       consumerSecret: 'secret'
