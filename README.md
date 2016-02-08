@@ -1,4 +1,10 @@
-# Passport-Evernote
+# passport-evernote
+
+[![Build](https://img.shields.io/travis/jaredhanson/passport-evernote.svg)](https://travis-ci.org/jaredhanson/passport-evernote)
+[![Coverage](https://img.shields.io/coveralls/jaredhanson/passport-evernote.svg)](https://coveralls.io/r/jaredhanson/passport-evernote)
+[![Quality](https://img.shields.io/codeclimate/github/jaredhanson/passport-evernote.svg?label=quality)](https://codeclimate.com/github/jaredhanson/passport-evernote)
+[![Dependencies](https://img.shields.io/david/jaredhanson/passport-evernote.svg)](https://david-dm.org/jaredhanson/passport-evernote)
+
 
 [Passport](https://github.com/jaredhanson/passport) strategy for authenticating
 with [Evernote](http://www.evernote.com/) using the OAuth 1.0a API.
